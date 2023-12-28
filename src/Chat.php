@@ -17,6 +17,10 @@ class Chat implements MessageComponentInterface {
         echo 'Server Started';
     }
 
+    /**
+     * @param ConnectionInterface $conn
+     * @return void
+     */
     public function onOpen(ConnectionInterface $conn) {
 
         // Store the new connection to send messages to later
@@ -47,7 +51,6 @@ class Chat implements MessageComponentInterface {
 
             $data['user_id_status'] = $user_id;
 
-            // first, you are sending to all existing users message of 'new'
             foreach ($this->clients as $client)
             {
                 $client->send(json_encode($data)); //here we are sending a status-message
@@ -57,6 +60,11 @@ class Chat implements MessageComponentInterface {
         echo "New connection! ({$conn->resourceId})\n";
     }
 
+    /**
+     * @param ConnectionInterface $from
+     * @param $msg
+     * @return void
+     */
     public function onMessage(ConnectionInterface $from, $msg) {
         $numRecv = count($this->clients) - 1;
         echo sprintf('Connection %d sending message "%s" to %d other connection%s' . "\n"
@@ -169,6 +177,10 @@ class Chat implements MessageComponentInterface {
         }
     }
 
+    /**
+     * @param ConnectionInterface $conn
+     * @return void
+     */
     public function onClose(ConnectionInterface $conn) {
 
         $querystring = $conn->httpRequest->getUri()->getQuery();
@@ -201,6 +213,11 @@ class Chat implements MessageComponentInterface {
         echo "Connection {$conn->resourceId} has disconnected\n";
     }
 
+    /**
+     * @param ConnectionInterface $conn
+     * @param \Exception $e
+     * @return void
+     */
     public function onError(ConnectionInterface $conn, \Exception $e) {
         echo "An error has occurred: {$e->getMessage()}\n";
 

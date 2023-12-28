@@ -74,7 +74,7 @@ if(isset($_POST["register"]))
             $mail->Body = '
             <p>Thank you for registering for Chat Application Demo.</p>
                 <p>This is a verification email, please click the link to verify your email address.</p>
-                <p><a href="http://localhost:81/tutorial/chat_application/verify.php?code='.$user_object->getUserVerificationCode().'">Click to Verify</a></p>
+                <p><a href="http://localhost:3306/Loussal_Mohammed_chat/verify.php?code='.$user_object->getUserVerificationCode().'">Click to Verify</a></p>
                 <p>Thank you...</p>
             ';
 
